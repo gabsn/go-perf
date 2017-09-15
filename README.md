@@ -3,7 +3,7 @@ Deploy different versions of a go application to compare their performance thank
 
 # Usage
 
-1. Create the different versions of the app you want to test. 
+1. Create the different versions of the app you want to test and put them into the [bin](https://github.com/gabsn/go-tracer-perf/tree/master/bin) folder.
 For example, if you're using dep, modify the constraints in the `Gopkg.toml`, `dep ensure` and then `go build` your app.
 
 2. Rename your binaries by following the naming convention `APP-VERSION`. 
