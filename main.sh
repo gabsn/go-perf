@@ -1,25 +1,29 @@
 #!/bin/bash
 
-checks_path='/opt/datadog-agent6/agent/checks.d'
-datadog_config='/etc/dd-agent/datadog.yaml'
-service='nicky'
-service_path='/usr/local/bin'
+app='nicky'
 
-# List of hosts
-hosts=(i-063dad0e3998b7e84 i-03cde3a370a4b5a70)
-
-# List of binaries to send
+# Put the list of bins we want to compare into the $bins array
 bins=()
 for b in bin/*; do bins+=($b); done
 
-# List of agent checks to replace
+# Read the list of all hosts for $app into the $hosts array
+IFS=$'\n' read -d '' -r -a hosts < hosts
+
+# Slice the hosts array to only keep as many hosts as we have bins to compare
+hosts=("${hosts[@]:0:${#bins[@]}}")
+echo "Hosts: ${hosts[@]}"
+
+# Put the list of checks we want to modify into the $checks array
 checks=()
 for c in checks/*; do checks+=($c); done
 
-# Scp the files to the hosts
-for host in ${hosts[@]}
+# SCP the files to the hosts
+for i in ${!hosts[@]}
 do
-	scp -C ${bins[@]} stg.$host: &
+	host=${hosts[$i]}
+	bin=${bins[$i]}
+
+	scp -C $bin stg.$host: &
 	scp ${checks[@]} stg.$host: &
 done
 
@@ -32,14 +36,14 @@ checks=("${checks[@]/checks\//}")
 # Trim the prefix `bin/`
 bins=("${bins[@]/bin\//}")
 
+# Execute the `remote.sh` script on each host
 for i in ${!hosts[@]}
 do
 	host=${hosts[$i]}
 	bin=${bins[$i]}
-	version=${bin#$service-}
-	echo "------------------------------------------" 
-	echo "Host: $host -> $bin"
-	echo "------------------------------------------" 
 
-	ssh stg.$host BIN=$bin CHECKS=$checks CHECKS_PATH=$checks_path DATADOG_CONFIG=$datadog_config SERVICE=$service SERVICE_PATH=$service_path VERSION=$version 'bash -s' < remote.sh
+	#Trim the prefix `$app-`
+	version=${bin#$app-}
+
+	ssh stg.$host BIN=$bin CHECKS=$checks APP=$app VERSION=$version 'bash -s' < remote.sh
 done
