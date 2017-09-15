@@ -14,6 +14,9 @@ The binaries will be deployed on them.
 
 4. Run the script with `./main.sh`.
 
+5. Visualize your metrics in the datadog app.
+![dashboard](https://files.slack.com/files-pri/T024FSN2Y-F73AXDU4Q/pasted_image_at_2017_09_15_04_14_pm.png)
+
 # Tips
 
 You should only provide hosts that come from the same availibility zone for better results in the comparison. You can use the datadog hostmap to visualize the hosts running your app per availibility zone.
