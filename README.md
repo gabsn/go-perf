@@ -1,7 +1,7 @@
 # go-perf
 Deploy different versions of a go application in a real environment and visualize their performance in datadog thanks to expvar metrics.
 
-# Usage
+## Usage
 
 1. Create the different versions of the app you want to test and put them into the [bin](https://github.com/gabsn/go-tracer-perf/tree/master/bin) folder.
 For example, if you're using dep, modify the constraints in the `Gopkg.toml`, `dep ensure` and then `go build` your app.
@@ -18,7 +18,7 @@ The binaries will be deployed on them.
 
 ![dashboard](https://github.com/gabsn/go-perf/blob/img/dashboard.png)
 
-# Tips
+## Tips
 
 You should only provide hosts that come from the same availibility zone for better results in the comparison. You can use the datadog hostmap to visualize the hosts running your app per availibility zone.
 Then inspect the page and go to `network` tab, click on `overview?` and save `rows` as a global variable. 
