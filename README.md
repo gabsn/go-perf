@@ -11,6 +11,16 @@ For example, `nicky-develop`, where `nicky` is the name of the app and `develop`
 
 3. If you have `n` versions to compare, provide `n` hosts in [the hosts list](https://github.com/gabsn/go-tracer-perf/blob/master/main.sh#L9).
 The binaries will be deployed on them.
-*Note:* you should only provide hosts that come from the same availibility zone for better results in the comparison. You can use the datadog hostmap to visualize what hosts are in which availibility zone for example.
 
 4. Run the script with `./main.sh`.
+
+# Tips
+
+You should only provide hosts that come from the same availibility zone for better results in the comparison. You can use the datadog hostmap to visualize the hosts running your app per availibility zone.
+Then inspect the page and go to `network` tab, click on `overview?` and save `rows` as a global variable. 
+Then open the chrome js console and type:
+```js
+hosts = temp1.filter(row => row.tags_by_source["Amazon Web Services"][0].includes("us-east-1a")).map(row => row.display_name)
+hosts.forEach(h => console.log(h))
+```
+This way you'll be able to provide only the hosts for a given availibility zone.
