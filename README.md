@@ -1,5 +1,5 @@
-# go-tracer-perf
-Deploy different versions of a go application to compare their performance thanks to datadog go expvar metrics.
+# go-perf
+Deploy different versions of a go application in a real environment and visualize their performance in datadog thanks to expvar metrics.
 
 # Usage
 
@@ -9,7 +9,7 @@ For example, if you're using dep, modify the constraints in the `Gopkg.toml`, `d
 2. Rename your binaries by following the naming convention `APP-VERSION`. 
 For example, `nicky-develop`, where `nicky` is the name of the app and `develop` the name of the branch.
 
-3. If you have `n` versions to compare, provide `n` hosts in [the hosts list](https://github.com/gabsn/go-tracer-perf/blob/master/main.sh#L9).
+3. If you have `n` versions to compare, provide `n` hosts in [the hosts list](https://github.com/gabsn/go-tracer-perf/blob/master/hosts).
 The binaries will be deployed on them.
 
 4. Run the script with `./main.sh`.
